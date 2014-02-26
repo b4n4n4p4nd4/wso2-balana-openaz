@@ -13,6 +13,7 @@
 			<groupId>openaz</groupId>
 			<artifactId>openaz</artifactId>
 			<scope>system</scope>
+			<version>1.0</version>
 			<systemPath>${project.basedir}/lib/openliberty-openaz-azapi.jar</systemPath>
 		</dependency>
 		<dependency>
@@ -20,7 +21,12 @@
 			<artifactId>balana</artifactId>
 			<version>1.2</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/balana.jar</systemPath>
+			<systemPath>${project.basedir}/lib/org.wso2.balana*</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>apache-common</groupId>
+			<artifactId>apache-common</artifactId>
+			<version>1.1.3</version>
 		</dependency>
 	</dependencies>
 </project>
