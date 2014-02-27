@@ -206,7 +206,7 @@ public class SimpleConcreteBalanaService extends AbstractService {
         }
     };
 	public final static String PDP_CONFIG_PROPERTY =
-        "com.sun.xacml.PDPConfigFile";
+        "org.wso2.balana.PDPConfigFile";
 	Log log = LogFactory.getLog(this.getClass());
 	
 	/**
@@ -238,33 +238,39 @@ public class SimpleConcreteBalanaService extends AbstractService {
 	 * as input and a set of policy files as input
 	 * to configure for the PDP
 	 * @param requestFile a file containing xacml request
-	 * @param policyFiles list of policy.xml files
+	 * @param policyStore path of the directory that contains policy.xml files
 	 * @throws ParsingException
 	 * @throws UnknownIdentifierException
 	 */
 	public SimpleConcreteBalanaService(
 				String requestFile,
-				String[] policyFiles) 
+				String policyStore) 
 			throws ParsingException, 
 				   UnknownIdentifierException {
 		
 		log.info( "Parameterized constructor: will use policy files " +
 				"provided by parameter: " + 
-				"\n\tpolicyFiles[] = " + Arrays.toString(policyFiles));
+				"\n\tpolicyFiles[] = " + policyStore);
+		
 		// Initialize the balana Service:
-		this.requestFile = requestFile;
-        FileBasedPolicyFinderModule filePolicyModule = new FileBasedPolicyFinderModule();
-        for (int i = 0; i < policyFiles.length; i++)
-        {
-        	File file = new File(policyFiles[i]);
-        	System.setProperty(FileBasedPolicyFinderModule.POLICY_DIR_PROPERTY,file.getParent());
-        	filePolicyModule.loadPolicies();
-        	      	
-//            filePolicyModule.addPolicy(policyFiles[i]);
-            if (log.isTraceEnabled()) log.trace(
-            	"Added policy file: " + policyFiles[i]);
-        }
 
+		this.requestFile = requestFile;
+        System.setProperty(FileBasedPolicyFinderModule.POLICY_DIR_PROPERTY,policyStore);
+        FileBasedPolicyFinderModule filePolicyModule = new FileBasedPolicyFinderModule();
+        filePolicyModule.loadPolicies();
+        
+//        for (int i = 0; i < policyFiles.length; i++)
+//        {
+//        	File file = new File(policyFiles[i]);
+//        	System.setProperty(FileBasedPolicyFinderModule.POLICY_DIR_PROPERTY,file.getParent());
+//        	filePolicyModule.loadPolicies();
+//        	      	
+////            filePolicyModule.addPolicy(policyFiles[i]);
+//            if (log.isTraceEnabled()) log.trace(
+//            	"Added policy file: " + policyFiles[i]);
+//        }
+
+        
         // next, setup the PolicyFinder that this PDP will use
         PolicyFinder policyFinder = new PolicyFinder();
         Set policyModules = new HashSet();
@@ -712,8 +718,9 @@ public class SimpleConcreteBalanaService extends AbstractService {
 		    	reqCtx.encode(bo, new Indenter());
 	        	log.trace("\n" + bo.toString());
 	        }
-	    	
+	    	System.out.println("fgljdfg");
 	        ResponseCtx rspCtx = pdp.evaluate(reqCtx);
+	        
 	        
 	        // Produce the XML for the Response (demo only, not needed)
 	        if (log.isTraceEnabled()) {
@@ -977,9 +984,7 @@ public class SimpleConcreteBalanaService extends AbstractService {
 			        				azObligation.createAzAttributeValue(
 			        					AzDataTypeIdAnyURI.AZ_DATATYPE_ID_ANYURI, 
 			        					value));
-		        			// end case: sun.xacml.AnyURIAttribute
 		        				
-		        			// case: sun.xacml.BooleanAttribute:
 	        				} else if (balanaType.toString().equals(
 		        						BooleanAttribute.identifier)) {
 		        				  if (log.isTraceEnabled()) log.trace(
