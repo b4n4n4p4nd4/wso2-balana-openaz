@@ -1,5 +1,4 @@
 package org.wso2.balana.openaz.test;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -29,7 +28,7 @@ public class HelloWorld {
 			UnknownIdentifierException {
 
 		SimpleConcreteBalanaService service = new SimpleConcreteBalanaService(
-				null, "/home/rajitha/workspace/policy");
+				null, "resources");
 		AzServiceFactory.registerDefaultProvider(service);
 
 		AzService azHandle = AzServiceFactory.getAzService();
@@ -72,12 +71,8 @@ public class HelloWorld {
 		Set <AzEntity<AzCategoryIdAction>> azActions = new HashSet<AzEntity<AzCategoryIdAction>>();
 		azActions.add(azAction);
 		azReqCtx.addResourceActionAssociation(azResource, azActions);
-		
-		System.out.println(azReqCtx.getAssociations().size());
 
 		AzResponseContext azRspCtx = azHandle.decide(azReqCtx);
-		
-		System.out.println(azRspCtx.getResults().size());
 
 		AzResult azResult = null;
 

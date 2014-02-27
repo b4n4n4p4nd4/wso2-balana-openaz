@@ -718,7 +718,6 @@ public class SimpleConcreteBalanaService extends AbstractService {
 		    	reqCtx.encode(bo, new Indenter());
 	        	log.trace("\n" + bo.toString());
 	        }
-	    	System.out.println("fgljdfg");
 	        ResponseCtx rspCtx = pdp.evaluate(reqCtx);
 	        
 	        
