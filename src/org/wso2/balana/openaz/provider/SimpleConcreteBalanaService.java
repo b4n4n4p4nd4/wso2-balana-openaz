@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import javax.security.auth.x500.X500Principal;
 
 import org.apache.commons.logging.Log;
@@ -33,7 +35,6 @@ import org.openliberty.openaz.azapi.AzAttributeValueAnyURI;
 import org.openliberty.openaz.azapi.AzObligations;
 import org.openliberty.openaz.azapi.AzResult;
 import org.openliberty.openaz.azapi.AzAttributeFinder;
-
 import org.openliberty.openaz.azapi.constants.AzCategoryId;
 import org.openliberty.openaz.azapi.constants.AzCategoryIdAction;
 import org.openliberty.openaz.azapi.constants.AzCategoryIdEnvironment;
@@ -51,14 +52,12 @@ import org.openliberty.openaz.azapi.constants.AzDataTypeIdX500Name;
 import org.openliberty.openaz.azapi.constants.AzDecision;
 import org.openliberty.openaz.azapi.constants.AzStatusCode;
 import org.openliberty.openaz.azapi.constants.AzXacmlStrings;
-
 import org.wso2.balana.openaz.AbstractService;
 import org.wso2.balana.openaz.AzAttributeValueBooleanImpl;
 import org.wso2.balana.openaz.AzEntityImpl;
 import org.wso2.balana.openaz.AzStatusMessagesImpl;
 import org.wso2.balana.openaz.AzAttributeValueStringImpl;
 import org.wso2.balana.openaz.AzAttributeValueAnyURIImpl;
-
 import org.openliberty.openaz.azapi.constants.AzDataTypeId;
 import org.openliberty.openaz.azapi.constants.AzDataTypeIdString;
 
@@ -91,7 +90,6 @@ import org.wso2.balana.attr.StringAttribute;
 import org.wso2.balana.attr.DateTimeAttribute;
 import org.wso2.balana.attr.AnyURIAttribute;
 import org.wso2.balana.attr.X500NameAttribute;
-
 import org.wso2.balana.ctx.ResponseCtx;
 import org.wso2.balana.ctx.xacml2.Result;
 import org.wso2.balana.ctx.Status;
@@ -258,7 +256,11 @@ public class SimpleConcreteBalanaService extends AbstractService {
         FileBasedPolicyFinderModule filePolicyModule = new FileBasedPolicyFinderModule();
         for (int i = 0; i < policyFiles.length; i++)
         {
-            filePolicyModule.addPolicy(policyFiles[i]);
+        	File file = new File(policyFiles[i]);
+        	System.setProperty(FileBasedPolicyFinderModule.POLICY_DIR_PROPERTY,file.getParent());
+        	filePolicyModule.loadPolicies();
+        	      	
+//            filePolicyModule.addPolicy(policyFiles[i]);
             if (log.isTraceEnabled()) log.trace(
             	"Added policy file: " + policyFiles[i]);
         }
