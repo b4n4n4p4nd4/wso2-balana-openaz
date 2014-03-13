@@ -23,9 +23,9 @@
 			<systemPath>${project.basedir}/lib/org.wso2.balana*</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>apache-common</groupId>
-			<artifactId>apache-common</artifactId>
-			<systemPath>${project.basedir}/lib/commons-*</systemPath>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 </project>
