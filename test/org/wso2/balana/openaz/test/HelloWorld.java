@@ -27,7 +27,7 @@ public class HelloWorld {
 	public static void main(String[] args) throws ParsingException,
 			UnknownIdentifierException {
 
-		SimpleConcreteBalanaService service = new SimpleConcreteBalanaService(
+		AzService service = new SimpleConcreteBalanaService(
 				null, "resources");
 		AzServiceFactory.registerDefaultProvider(service);
 
