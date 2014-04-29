@@ -13,6 +13,7 @@
 			<groupId>openaz</groupId>
 			<artifactId>openaz</artifactId>
 			<scope>system</scope>
+			<version>1.0.0</version>
 			<systemPath>${project.basedir}/lib/openliberty-openaz-azapi.jar</systemPath>
 		</dependency>
 		<dependency>
